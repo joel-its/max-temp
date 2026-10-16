@@ -1,0 +1,37 @@
+﻿name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  build-and-analyze:
+    name: Build & Analyze
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore *.sln
+
+      - name: Build Solution
+        run: msbuild *.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Upload Build Logs on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            **/*.log

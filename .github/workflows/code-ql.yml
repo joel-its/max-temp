@@ -1,0 +1,39 @@
+﻿name: CodeQL
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - development
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ csharp ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet Packages
+        run: nuget restore MaxTemp.sln
+
+      - name: Build Solution
+        run: msbuild MaxTemp.sln /p:Configuration=Release
+
+      - uses: github/codeql-action/analyze@v3

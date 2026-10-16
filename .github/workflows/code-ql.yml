@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp' ]
+        language: [ csharp ]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +30,10 @@ jobs:
 
       - uses: microsoft/setup-msbuild@v2
 
-      - run: nuget restore *.sln
-      - run: msbuild *.sln /p:Configuration=Release
+      - name: Restore NuGet Packages
+        run: nuget restore MaxTemp.sln
+
+      - name: Build Solution
+        run: msbuild MaxTemp.sln /p:Configuration=Release
 
       - uses: github/codeql-action/analyze@v3

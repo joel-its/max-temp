@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace MaxTemp
 {
@@ -36,15 +37,24 @@ namespace MaxTemp
         /// <param name="e"></param>
         private void BtnAuswerten_Click(object sender, RoutedEventArgs e)
         {
-            //Zugriff auf Datei erstellen.
+            //Dialog öffnen um die Datei auszuwählen.
+            var dialog = new OpenFileDialog()
+            {
+                Filter = "CSV-Dateien (*.csv)|*.csv|Alle Dateien (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() != true) return;
+
+            // Datei wird automatisch wieder Freigegeben.
+            using (var reader = new StreamReader(dialog.FileName))
+            {
+                
+            }
 
             //Anfangswert setzen, um sinnvoll vergleichen zu können.
 
 
             //In einer Schleife die Werte holen und auswerten. Den größten Wert "merken".
-
-
-            //Datei wieder freigeben.
 
 
             //Höchstwert auf Oberfläche ausgeben.

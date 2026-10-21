@@ -23,7 +23,7 @@ jobs:
         uses: microsoft/setup-msbuild@v3
 
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
+        uses: NuGet/setup-nuget@v4
 
       - name: Restore NuGet Packages
         run: nuget restore MaxTemp.sln

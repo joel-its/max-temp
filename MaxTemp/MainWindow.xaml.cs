@@ -38,11 +38,7 @@ namespace MaxTemp
         private void BtnAuswerten_Click(object sender, RoutedEventArgs e)
         {
             //Dialog öffnen um die Datei auszuwählen.
-            var dialog = new OpenFileDialog()
-            {
-                Filter = "CSV-Dateien (*.csv)|*.csv|Alle Dateien (*.*)|*.*"
-            };
-
+            var dialog = new OpenFileDialog() { Filter = "CSV-Dateien (*.csv)|*.csv|Alle Dateien (*.*)|*.*" };
             if (dialog.ShowDialog() != true) return;
 
             // Datei wird automatisch wieder Freigegeben.
